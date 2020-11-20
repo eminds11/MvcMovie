@@ -1,0 +1,81 @@
+﻿@model MvcMovie.Models.CalViewModel
+@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<h2>Calendar View</h2>
+
+<div class="row">
+    <div class="col-6">
+        <div style="font-size:large; text-align: center; background-color: black; color:white">November 2020</div>
+        <div id="app-calendar1" style="font-size:large; text-align: center"></div>
+    </div>
+    <div class="col-6">
+        <div style="font-size:large; text-align: center; background-color: black; color:white">December 2020</div>
+        <div id="app-calendar2" style="font-size:large; text-align: center"></div>
+    </div>
+</div>
+
+
+
+<script>
+    var dayinNov =  @Html.Raw(JsonConvert.SerializeObject(ViewBag.dayNov));
+    var resultNov =  @Html.Raw(JsonConvert.SerializeObject(ViewBag.resNov));
+
+    const myRow = document.getElementById("app-calendar1");
+    console.log(myRow);
+
+    for (i = 16; i <= 30; i++) {
+
+        let newTD = document.createElement("td");
+
+        newTD.textContent = i;
+
+        if (dayinNov[i - 16] == "day-in") {
+            if (resultNov[i - 16] == "true") {
+                newTD.setAttribute('class', "day-in day-true");
+            } else {
+                newTD.setAttribute('class', "day-in day-false");
+            }
+        } else {
+            newTD.setAttribute('class', "day-out");
+        }
+        myRow.appendChild(newTD);
+    }
+
+</script>
+
+<script>
+    var dayinDec =  @Html.Raw(JsonConvert.SerializeObject(ViewBag.dayDec));
+    console.log(dayinDec);
+    var resultDec =  @Html.Raw(JsonConvert.SerializeObject(ViewBag.resDec));
+    console.log(resultDec);
+
+    const myRow2 = document.getElementById("app-calendar2");
+    console.log(myRow2);
+
+    let newTD2 = document.createElement("td");
+    newTD2.setAttribute('class', "day-out");
+    myRow2.appendChild(newTD2);
+
+    for (i = 1; i <= 31; i++) {
+
+        let newTD2 = document.createElement("td");
+
+        newTD2.textContent = i;
+
+        if (dayinDec[i - 1] == "day-in") {
+            if (resultDec[i - 1] == "true") {
+                newTD2.setAttribute('class', "day-in day-true");
+            } else {
+                newTD2.setAttribute('class', "day-in day-false");
+            }
+        } else {
+            newTD2.setAttribute('class', "day-out");
+        }
+        myRow2.appendChild(newTD2);
+    }
+</script>
+
